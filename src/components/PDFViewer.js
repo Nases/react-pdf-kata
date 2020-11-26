@@ -1,69 +1,46 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import { pdf } from '@react-pdf/renderer'
 import { Document, Page } from 'react-pdf'
-
 
 import pdfjs from 'pdfjs-dist'
 import PdfjsWorker from 'pdfjs-dist/build/pdf.worker.js'
 pdfjs.GlobalWorkerOptions.workerPort = new PdfjsWorker()
 
 
-class PDFViewer extends React.Component {
-  state = {
-    loading: true,
-    document: null
-  }
+const PDFViewer = (props) => {
+  const [loading, setLoading] = useState(true)
+  const [document, setDocument] = useState(null)
 
-  componentDidMount() {
-    this.renderDocument(this.props.document)
-  }
+  useEffect(() => {
+    renderDocument(props.document)
+  }, [props])
 
-  componentWillReceiveProps(newProps) {
-    // Don't update if document didn't change
-    if (this.props.document === newProps.document) return
-
-    this.renderDocument(newProps.document)
-  }
-
-  renderDocument = doc => {
+  const renderDocument = doc => {
     if (!doc) {
-      this.setState({ document: null })
+      setDocument(null)
       return
     }
-
-    this.setState({ loading: true })
-
-    // pdf(doc).toBlob().then(value => console.log(value))
-
+    setLoading(true)
     try {
-      pdf(doc)
-        .toBlob()
-        .then(blob => {
-          const url = URL.createObjectURL(blob)
-
-          if (this.props.onUrlChange) {
-            this.props.onUrlChange(url)
-          }
-
-          this.setState({ document: url, loading: false })
-        })
+      pdf(doc).toBlob().then(blob => {
+        const url = URL.createObjectURL(blob)
+        if (props.onUrlChange) {
+          props.onUrlChange(url)
+        }
+        setDocument(url)
+        setLoading(false)
+      })
     } catch (error) {
-      this.props.onRenderError && this.props.onRenderError(error.message)
+      props.onRenderError && props.onRenderError(error.message)
     }
   }
 
-
-  render() {
-    return (
-      <Document file={this.state.document} onLoadSuccess={this.onDocumentLoad} {...this.props}>
-        <Page renderMode="svg" pageNumber={1} />
-      </Document>
-    )
-  }
+  return (
+    <Document file={document} {...props}>
+      <Page renderMode="svg" pageNumber={1} />
+    </Document>
+  )
 }
 
-PDFViewer.defaultProps = {
-  document: null
-}
 
 export default PDFViewer
