@@ -1,0 +1,42 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+*::selection {
+  color: #3E3E3E;
+  background: #FCD3CC;
+}
+
+html, body, #root  {
+  height: 100%;
+}
+
+body {
+  overflow-y: auto;
+  font-family: "Source Sans Pro";
+  font-size: 18px;
+}
+
+.react-pdf__Page {
+  box-shadow: 0 25px 50px 0 rgba(62, 62, 62, 0.15);
+}
+
+@media(max-width: 1290px) {
+  .react-pdf__Document {
+    transform: scale(0.8);
+  }
+}
+
+@media(max-width: 1050px) {
+  .react-pdf__Document {
+    transform: scale(0.6);
+  }
+}
+
+@media(max-width: 992px) {
+  .react-pdf__Document {
+    transform: scale(1);
+  }
+}
