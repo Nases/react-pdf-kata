@@ -4,7 +4,7 @@ import Repl from '../src/components/Repl'
 
 const ReplPage = () => {
   return (
-    <Repl activeTab='pdf' />
+    <Repl />
   )
 }
 

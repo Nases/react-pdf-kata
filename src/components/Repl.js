@@ -20,7 +20,6 @@ const TestPDF = ({ inputValue }) => {
 
 const Repl = () => {
   const [inputValue, setInputValue] = useState('')
-  console.log(inputValue)
 
   const handleChange = e => {
     setInputValue(e.target.value)
@@ -29,7 +28,6 @@ const Repl = () => {
   return (
     <>
       <input type="text" onChange={handleChange} />
-      <div>fake: {inputValue}</div>
       <PDFViewerWithNoSSR document={<TestPDF inputValue={inputValue} />} />
     </>
   )
