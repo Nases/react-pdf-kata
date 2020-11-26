@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Document, Page, Text } from '@react-pdf/renderer'
 import dynamic from 'next/dynamic'
 const PDFViewerWithNoSSR = dynamic(import('./PDFViewer'), { ssr: false })
+
 
 const TestPDF = ({ inputValue }) => {
   return (
@@ -20,7 +21,6 @@ const TestPDF = ({ inputValue }) => {
 const Repl = () => {
   const [inputValue, setInputValue] = useState('')
   console.log(inputValue)
-
 
   const handleChange = e => {
     setInputValue(e.target.value)
